@@ -35,6 +35,10 @@ include_directories(include)
 # Add tests
 enable_testing()
 
+add_executable(io_test "test/io_test.cpp")
+target_link_libraries(io_test PRIVATE Experiment FileRW Option)
+add_test(NAME io_test COMMAND io_test)
+
 add_executable(option_test "test/option_test.cpp")
 target_link_libraries(option_test PRIVATE Option)
 add_test(NAME option_test COMMAND option_test)
@@ -42,7 +46,3 @@ add_test(NAME option_test COMMAND option_test)
 add_executable(portfolio_test "test/portfolio_test.cpp")
 target_link_libraries(portfolio_test PRIVATE Option Portfolio)
 add_test(NAME portfolio_test COMMAND portfolio_test)
-
-add_executable(io_test "test/io_test.cpp")
-target_link_libraries(io_test PRIVATE Experiment FileRW Option)
-add_test(NAME io_test COMMAND io_test)
