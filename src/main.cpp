@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         vc.addNewOption(newOption);
 
         double mean = vc.getPortfolioMean();
-        double varia = vc.estimateVariance(line);
+        double varia = vc.estimateVariance();
 
         if (varia > limit) {
             cout << "Option (" << i << ") Exceeds variance limit!" << endl;

@@ -68,7 +68,7 @@ void VarianceCalculator::addNewOption(Option newOption) {
     getPortfolioSum();
 }
 
-double VarianceCalculator::estimateVariance(string line) {
+double VarianceCalculator::estimateVariance() {
     double mean = getPortfolioMean();
     return getPortfolioVariance(mean);
 }

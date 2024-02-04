@@ -19,7 +19,7 @@ private:
 	double getPortfolioVariance(double mean);
 	void getPortfolioSum();
 public:
-	double estimateVariance(string line);
+	double estimateVariance();
 	void addNewOption(Option newOption);
 	double getPortfolioMean();
 	VarianceCalculator(int N, double r, double sigma, double S_0, double dt);
