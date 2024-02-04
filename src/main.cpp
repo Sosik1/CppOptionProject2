@@ -1,75 +1,13 @@
 ﻿#include "FileRW.hpp"
 #include "Option.hpp"
-#include "external/inverse_cdf.hpp"
 #include <stdio.h>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <VarianceCalculator.hpp>
 
 using namespace std;
-
-double S(double r, double sigma, double T, double Z, double S_0)
-{
-    return exp((log(S_0) + (r - 0.5 * sigma * sigma) * T) + Z * sigma * sqrt(T));
-}
-
-double getPortfolioVariance(vector<double> portfolioPayoffs, double mean) {
-    double variance = 0;
-
-    for (double payoff : portfolioPayoffs) {
-        variance += pow(payoff - mean, 2);
-    }
-
-    return variance / portfolioPayoffs.size();
-}
-
-double getPortfolioMean(vector<double> portfolioPayoffs) {
-    double sum = 0;
-
-    for (double payoff : portfolioPayoffs) {
-        sum += payoff;
-    }
-    return sum / portfolioPayoffs.size();
-}
-
-vector<double> getPortfolioSum(vector<vector<double>> matrix) {
-    vector<double> result;
-
-    for (int i = 0; i < matrix[0].size(); i++) {
-        double sum = 0;
-        for (int j = 1; j < matrix.size(); j++) {
-            sum += matrix[j][i];
-        }
-        result.push_back(sum);
-    }
-
-    return result;
-}
-
-void addNewOption(Option newOption, vector<vector<double>> &matrix) {
-    vector<double> result;
-
-    for (double St : matrix[0]) {
-        double payoff = newOption.getPayoff(St);
-        result.push_back(payoff);
-    }
-
-    matrix.push_back(result);
-}
-
-void initializeMatrix(vector<vector<double>> &matrix, int N, double r, double sigma, double S_0, double dt) {
-    vector<double> underlying = vector<double>(N);
-
-    double dy = static_cast<double>(1) / (N + 1);
-
-    for (int i = 0; i < N; i++) {
-        double Z = inverseStandardNormal((i + 1) * dy);
-        underlying[i] = S(r, sigma, dt, Z, S_0);
-    }
-
-    matrix.push_back(underlying);
-}
 
 int main(int argc, char *argv[])
 {
@@ -115,7 +53,7 @@ int main(int argc, char *argv[])
 
     double dt = t / 365.0;
 
-    initializeMatrix(matrix, N, r, sigma, S_0, dt);
+    VarianceCalculator vc = VarianceCalculator(N, r, sigma, S_0, dt);
 
     cout << "Reading file " << filename << "..." << endl;
     ifstream file;
@@ -134,16 +72,20 @@ int main(int argc, char *argv[])
 
     while (getline(file, line)) {
         if (line.empty() || line[0] == '#') continue;
+
+        if (line == "reset") {
+            cout << "Resetting portfolio..." << endl;
+            i = 0;
+            vc.reset();
+            continue;
+        }
         
         Option newOption = FileRW::readOptionPurchase(line);
 
-        addNewOption(newOption, matrix);
+        vc.addNewOption(newOption);
 
-        vector<double> portfolioPayoff = getPortfolioSum(matrix);
-
-        double mean = getPortfolioMean(portfolioPayoff);
-        double varia = getPortfolioVariance(portfolioPayoff, mean);
-
+        double mean = vc.getPortfolioMean();
+        double varia = vc.estimateVariance(line);
 
         if (varia > limit) {
             cout << "Option (" << i << ") Exceeds variance limit!" << endl;

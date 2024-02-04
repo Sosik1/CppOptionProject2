@@ -13,13 +13,15 @@ project ("CppOptionProject")
 
 add_library(Option src/Option.cpp)
 add_library(FileRW src/FileRW.cpp)
+add_library(VarianceCalculator src/VarianceCalculator.cpp)
 
 target_include_directories(Option PUBLIC include external)
 target_include_directories(FileRW PUBLIC include)
+target_include_directories(VarianceCalculator PUBLIC include)
 
 # Dodaj źródło do pliku wykonywalnego tego projektu.
 add_executable (CppOptionProject "src/main.cpp")
-target_link_libraries(CppOptionProject PRIVATE Option FileRW)
+target_link_libraries(CppOptionProject PRIVATE Option FileRW VarianceCalculator)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CppOptionProject PROPERTY CXX_STANDARD 20)

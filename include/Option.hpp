@@ -15,7 +15,6 @@ private:
     int trade_volume;        // Trade volume in units of options.
 public:
     Option(double strike, option_type option_type, contract_type contract_type, double ttm, int volume);
-    double getPrice(double S, double r, double sigma);
     double getStrikePrice();
     option_type getOptionType() const;
     contract_type getContractType() const;

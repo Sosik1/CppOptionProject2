@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-    cout << "load test complete :)" << endl;
+    cout << "io test complete :)" << endl;
 
     return 0;
 }

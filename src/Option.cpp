@@ -52,16 +52,5 @@ double Option::getPayoff(double underlying) const {
         if (type == call) return -max(underlying - strike_price, 0.0) * trade_volume;
         if (type == put) return -max(strike_price - underlying, 0.0) * trade_volume;
     }
-    return 0.0
-}
-
-double Option::getPrice(double S, double r, double sigma)
-{
-    double d1 = (log(S / strike_price) + (r + sigma * sigma * 0.5) * time_to_maturity) / sigma * sqrt(time_to_maturity);
-    double d2 = d1 - sigma * sqrt(time_to_maturity);
-
-    if (type == call)
-        return N(d1) * S - N(d2) * strike_price * exp(-r * time_to_maturity);
-    else
-        return strike_price * exp(-r * time_to_maturity) * N(-d2) - S * N(-d1);
+    return 0.0;
 }
