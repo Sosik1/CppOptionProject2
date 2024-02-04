@@ -21,6 +21,7 @@ public:
     contract_type getContractType() const;
     double getTimeToMaturity() const;
     int getTradeVolume() const;
+    double getPayoff(double underlying) const;
 };
 
 #endif OPTION_HPP

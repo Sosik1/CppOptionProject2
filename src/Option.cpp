@@ -3,7 +3,11 @@
 #include "option_type.hpp"
 #include "contract_type.hpp"
 #include "external/normdist.hpp"
+#include <math.h>
 
+#include <iostream>
+
+using namespace std;
 
 Option::Option(double strike, option_type option_type, contract_type contract_type, double ttm, int volume)
 {
@@ -37,6 +41,17 @@ double Option::getTimeToMaturity() const
 int Option::getTradeVolume() const
 {
     return trade_volume;
+}
+
+double Option::getPayoff(double underlying) const {
+    if (contract == longPosition) {
+        if (type == call) return max(underlying - strike_price, 0.0) * trade_volume;
+        if (type == put) return max(strike_price - underlying, 0.0) * trade_volume;
+    }
+    else if (contract == shortPosition) {
+        if (type == call) return -max(underlying - strike_price, 0.0) * trade_volume;
+        if (type == put) return -max(strike_price - underlying, 0.0) * trade_volume;
+    }
 }
 
 double Option::getPrice(double S, double r, double sigma)

@@ -12,18 +12,14 @@ endif()
 project ("CppOptionProject")
 
 add_library(Option src/Option.cpp)
-add_library(Portfolio src/Portfolio.cpp)
-add_library(Experiment src/Experiment.cpp)
 add_library(FileRW src/FileRW.cpp)
 
 target_include_directories(Option PUBLIC include external)
-target_include_directories(Portfolio PUBLIC include)
-target_include_directories(Experiment PUBLIC include)
 target_include_directories(FileRW PUBLIC include)
 
 # Dodaj źródło do pliku wykonywalnego tego projektu.
 add_executable (CppOptionProject "src/main.cpp")
-target_link_libraries(CppOptionProject PRIVATE Option Portfolio Experiment FileRW)
+target_link_libraries(CppOptionProject PRIVATE Option FileRW)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CppOptionProject PROPERTY CXX_STANDARD 20)
@@ -42,7 +38,3 @@ add_test(NAME io_test COMMAND io_test)
 add_executable(option_test "test/option_test.cpp")
 target_link_libraries(option_test PRIVATE Option)
 add_test(NAME option_test COMMAND option_test)
-
-add_executable(portfolio_test "test/portfolio_test.cpp")
-target_link_libraries(portfolio_test PRIVATE Option Portfolio)
-add_test(NAME portfolio_test COMMAND portfolio_test)
