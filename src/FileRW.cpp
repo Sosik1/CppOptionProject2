@@ -28,4 +28,6 @@ Option FileRW::readOptionPurchase(string line) {
 
         return Option(strikePrice, type, position, timeToExpiry, tradeVolume);
     }
+
+    return Option(0, call, longPosition, 0, 0);
 }

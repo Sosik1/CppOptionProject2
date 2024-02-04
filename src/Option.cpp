@@ -52,6 +52,7 @@ double Option::getPayoff(double underlying) const {
         if (type == call) return -max(underlying - strike_price, 0.0) * trade_volume;
         if (type == put) return -max(strike_price - underlying, 0.0) * trade_volume;
     }
+    return 0.0
 }
 
 double Option::getPrice(double S, double r, double sigma)
