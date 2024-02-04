@@ -34,9 +34,13 @@ include_directories(include)
 enable_testing()
 
 add_executable(io_test "test/io_test.cpp")
-target_link_libraries(io_test PRIVATE Experiment FileRW Option)
+target_link_libraries(io_test PRIVATE FileRW Option)
 add_test(NAME io_test COMMAND io_test)
 
 add_executable(option_test "test/option_test.cpp")
 target_link_libraries(option_test PRIVATE Option)
 add_test(NAME option_test COMMAND option_test)
+
+add_executable(variance_test "test/variance_test.cpp")
+target_link_libraries(variance_test PRIVATE FileRW Option VarianceCalculator)
+add_test(NAME variance_test COMMAND variance_test) 

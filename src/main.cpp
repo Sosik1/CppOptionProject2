@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <VarianceCalculator.hpp>
 
 using namespace std;
@@ -25,6 +26,9 @@ int main(int argc, char *argv[])
     vector<vector<double>> matrix;
 
     string filename = "sample_small.csv";
+    string outputFileName = "variance_output.csv";
+
+    std::ofstream outputFile(outputFileName);
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-f") == 0) {
@@ -48,7 +52,6 @@ int main(int argc, char *argv[])
         if (strcmp(argv[i], "-vl") == 0 || strcmp(argv[i], "--variance-limit") == 0) {
             limit = stod(argv[i + 1]);
         }
-
     }
 
     double dt = t / 365.0;
@@ -60,7 +63,10 @@ int main(int argc, char *argv[])
     string line;
 
     cout << "no." << " " << "trades" << " " << "mean" << " " << "variance" << " " << "standard_deviation" << endl;
+    outputFile << "no" << "," << "trades" << "," << "mean" << "," << "variance" << "," << "standard_deviation" << endl;
     cout << 0 << " " << 0 << " " << 0 << " " << 0 << " " << 0 << endl;
+    outputFile << 0 << "," << 0 << "," << 0 << "," << 0 << "," << 0 << endl;
+
 
     file.open(filename);
     if (!file.is_open()) {
@@ -94,8 +100,12 @@ int main(int argc, char *argv[])
         }
 
         cout << i << " " << mean << " " << varia << " " << sqrt(varia) << endl;
+        outputFile << i << "," << mean << "," << varia << "," << sqrt(varia) << endl;
         i++;
     }
+
+    file.close();
+    outputFile.close();
 
     return 0;
 }
