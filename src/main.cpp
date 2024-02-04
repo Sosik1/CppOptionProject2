@@ -99,8 +99,8 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
 
-        cout << i << " " << mean << " " << varia << " " << sqrt(varia) << endl;
-        outputFile << i << "," << mean << "," << varia << "," << sqrt(varia) << endl;
+        cout << i << " " << i << " " << mean << " " << varia << " " << sqrt(varia) << endl;
+        outputFile << i << "," << i << "," << mean << "," << varia << "," << sqrt(varia) << endl;
         i++;
     }
 
