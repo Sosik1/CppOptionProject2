@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         double varia = vc.estimateVariance();
 
         if (varia > limit) {
-            cout << "Option (" << i << ") Exceeds variance limit!" << endl;
+            cout << "Option (" << i << ") Exceeds variance limit!" << " Variance: " << varia << " Limit: " << limit << endl;
             cerr << "Variance exceeds limit! Exiting..." << endl;
             exit(EXIT_FAILURE);
         }
