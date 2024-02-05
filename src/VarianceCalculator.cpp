@@ -44,14 +44,21 @@ double VarianceCalculator::getPortfolioMean() {
 }
 
 void VarianceCalculator::getPortfolioSum() {
-    portfolioPayoff.clear();
+    bool isInitialPass = portfolioPayoff.empty();
 
-    for (int i = 0; i < matrix[0].size(); i++) {
-        double sum = 0;
-        for (int j = 1; j < matrix.size(); j++) {
-            sum += matrix[j][i];
+    int columnSize = matrix[0].size();
+    int rowSize = matrix.size();
+
+    if (isInitialPass) {
+        portfolioPayoff.reserve(columnSize);
+        for (int i = 0; i < columnSize; i++) {
+            portfolioPayoff.push_back(matrix[rowSize - 1][i]);
         }
-        portfolioPayoff.push_back(sum);
+    }
+    else {
+        for (int i = 0; i < columnSize; i++) {
+            portfolioPayoff[i] += matrix[rowSize - 1][i];
+        }
     }
 }
 
