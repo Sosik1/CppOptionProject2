@@ -62,10 +62,10 @@ int main(int argc, char *argv[])
     ifstream file;
     string line;
 
-    cout << "no." << " " << "trades" << " " << "mean" << " " << "variance" << " " << "standard_deviation" << endl;
-    outputFile << "no" << "," << "trades" << "," << "mean" << "," << "variance" << "," << "standard_deviation" << endl;
-    cout << 0 << " " << 0 << " " << 0 << " " << 0 << " " << 0 << endl;
-    outputFile << 0 << "," << 0 << "," << 0 << "," << 0 << "," << 0 << endl;
+    cout << "no." << " " << "mean" << " " << "variance" << " " << "standard_deviation" << endl;
+    outputFile << "no" << "," << "mean" << "," << "variance" << "," << "standard_deviation" << endl;
+    cout << 0 << " " << 0 << " " << 0 << " " << 0 << endl;
+    outputFile << 0 << "," << 0 << "," << 0 << "," << 0 << endl;
 
 
     file.open(filename);
